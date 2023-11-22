@@ -8,7 +8,7 @@ export const searchCities = async (term) => {
 
   if (data.length === 0) {
     console.log('Nenhuma cidade encontrada');
-    return alert('Nenhuma cidade encontrada');
+    window.alert('Nenhuma cidade encontrada');
   }
   console.log(data);
   // console.log(data[0].url);
@@ -33,11 +33,11 @@ export const getWeatherByCity = async (cityURL) => {
   const dataTempo = await resultadoTempo.json();
   console.log(dataTempo);
   return {
-    temp: dataTempo.current.temp_c,
-    condition: dataTempo.current.condition,
-    icon: dataTempo.current.condition.icon,
-    country: dataTempo.location.country,
     name: dataTempo.location.name,
+    country: dataTempo.location.country,
+    temp: dataTempo.current.temp_c,
+    condition: dataTempo.current.condition.text,
+    icon: dataTempo.current.condition.icon,
     url: cityURL,
   };
 };

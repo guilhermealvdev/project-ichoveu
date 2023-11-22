@@ -119,18 +119,16 @@ export async function handleSearch(event) {
 
   const cidadesEncontradas = await searchCities(searchValue);
 
-  if (cidadesEncontradas && cidadesEncontradas.length > 0) {
-    const promises = cidadesEncontradas.map((cidade) => {
-      return getWeatherByCity(cidade.url);
-    });
+  // if (cidadesEncontradas && cidadesEncontradas.length > 0) {
+  // const promises = cidadesEncontradas.map((cidade) => getWeatherByCity(cidade.url));
+  // return promises;
 
-    try {
-      const resultados = await Promise.all(promises);
-      console.log(resultados);
-    } catch (error) {
-      console.error('Erro ao obter informações meteorológicas:', error);
-    }
-  } else {
-    alert('Nenhuma cidade encontrada');
-  }
+  const resultados = await Promise.all(
+    cidadesEncontradas.map((urlDasCidades) => getWeatherByCity(urlDasCidades.url)),
+  );
+  console.log(resultados);
+  resultados.forEach((cadaResultado) => {
+    const ulElement = document.getElementById('cities');
+    ulElement.appendChild(createCityElement(cadaResultado));
+  });
 }
